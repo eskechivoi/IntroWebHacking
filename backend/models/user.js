@@ -1,20 +1,25 @@
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
-  content: {
+  name: String,
+  surname: Boolean,
+  phoneNumber: Number,
+  address: String,
+  postcode: Number,
+  email: {
     type: String,
-    required: true,
-    minlength: 5
+    required: true
   },
-  important: Boolean,
-})
-
-userSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-    delete returnedObject.__v
-  }
+  password: {
+    type: String,
+    required: true
+  },
+  education: String,
+  country: String,
+  region: String,
+  experience: String,
+  desingExperience: String,
+  additionalDetails: String
 })
 
 module.exports = mongoose.model('User', userSchema)

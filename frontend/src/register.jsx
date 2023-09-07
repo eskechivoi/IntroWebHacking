@@ -2,21 +2,18 @@ import { useState } from 'react'
 import userService from './services/user'
 import Header from './header.jsx'
 
-function Login (props) {
+function Register (props) {
   const [user, setUser] = useState({ email: '', password: '' });
   const [alert, setAlert] = useState({ show: false, text: ''});
   
   const login = event => {
     event.preventDefault() // To not reload the page
-    userService.login(user).then(response => {
-      // recibimos el token de autorización si todo ha ido bien
-      // lo guardamos en el objeto user
-      props.userToken = response.data.token
-      window.href.location = '/profile' // Al recargar la página, profile ya tiene el userToken.
+    userService.register(user).then(response => {
+      window.href.location = '/login'
     }).catch(error => {
       console.log(error)
       if (error.response && error.response.status === 401)
-        setAlert({show: true, text: 'Email or password is not correct.'})
+        setAlert({show: true, text: 'There is already an account with these credentials.'})
     })
   }
 
@@ -36,8 +33,8 @@ function Login (props) {
 
                   <form className="mb-md-5 mt-md-4 pb-5" onSubmit={login}>
 
-                    <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
-                    <p className="text-black-50 mb-5">Please enter your login and password!</p>
+                    <h2 className="fw-bold mb-2 text-uppercase">Register</h2>
+                    <p className="text-black-50 mb-5">Enter your account credentials</p>
 
                     <div className="form-outline form-black mb-4">
                       <input type="email" id="typeEmailX" className="form-control form-control-lg" value={user.email} onChange={handleEmailChange}/>
@@ -51,17 +48,9 @@ function Login (props) {
 
                     <div className="alert alert-danger" role="alert" style={{display: alert.show ? 'block' : 'none' }}>{alert.text}</div>
 
-                    <p className="small mb-5 pb-lg-2"><a className="text-black-50" href="#!">Forgot password?</a></p>
-
-                    <button className="btn btn-outline-dark btn-lg px-5" type="submit">Login</button>
+                    <button className="btn btn-outline-dark btn-lg px-5" type="submit">Register</button>
 
                   </form>
-
-                  <div>
-                    <p className="mb-0">Don't have an account? <a href="/register" className="text-black-50 fw-bold">Sign Up</a>
-                    </p>
-                  </div>
-
                 </div>
               </div>
             </div>
@@ -71,4 +60,4 @@ function Login (props) {
     </>
 )}
 
-export default Login;
+export default Register;

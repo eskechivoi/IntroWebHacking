@@ -4,12 +4,15 @@ const loginRouter = require('express').Router()
 const User = require('../models/user')
 
 loginRouter.post('/', async (request, response) => {
-  const { username, password } = request.body
+  const { email, password } = request.body
 
-  const user = await User.findOne({ username })
+  const user = await User.findOne({ email }).catch(() => {
+    return response.status(500).end()
+  })
+
   const passwordCorrect = user === null
     ? false
-    : await bcrypt.compare(password, user.passwordHash)
+    : await bcrypt.compare(password, user.password)
 
   if (!(user && passwordCorrect)) {
     return response.status(401).json({
@@ -26,7 +29,7 @@ loginRouter.post('/', async (request, response) => {
 
   response
     .status(200)
-    .send({ token, username: user.username, name: user.name })
+    .send({ token })
 })
 
 module.exports = loginRouter

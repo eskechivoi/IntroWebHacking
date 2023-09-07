@@ -1,7 +1,9 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
+const cors = require('cors')
 const loginRouter = require('./controllers/login')
+const registerRouter = require('./controllers/register')
 const mongoose = require('mongoose')
 
 mongoose.set('strictQuery', false)
@@ -19,7 +21,9 @@ mongoose.connect(url)
 	})
 
 app.use(express.json())
+app.use(cors())
 app.use('/api/login', loginRouter)
+app.use('/api/register', registerRouter)
 
 const PORT = process.env.PORT
 app.listen(PORT)
