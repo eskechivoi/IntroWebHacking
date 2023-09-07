@@ -1,16 +1,12 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import userService from './services/user'
 import Header from './header.jsx'
 
 function Login (props) {
+  const navigate = useNavigate();
   const [user, setUser] = useState({ email: '', password: '' });
   const [alert, setAlert] = useState({ show: false, text: ''});
-  
-  useEffect(() => {
-    if (props.userToken && props.userToken !== '') {
-      window.location.href = '/profile'; // Al recargar la página, profile ya tiene el userToken.
-    }
-  }, [props.userToken]); 
 
   const login = event => {
     event.preventDefault() // To not reload the page
@@ -18,6 +14,7 @@ function Login (props) {
       // recibimos el token de autorización si todo ha ido bien
       // lo guardamos en el objeto user
       props.setUserToken(response.data.token)
+      navigate('/profile'); // Al recargar la página, profile ya tiene el userToken.
     }).catch(error => {
       console.log(error)
       if (error.response && error.response.status === 401)
