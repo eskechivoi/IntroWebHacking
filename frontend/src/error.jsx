@@ -1,7 +1,6 @@
 import Header from './header'
 
 function ErrorPage (props) {
-    console.log(props.code + props.desc + props.name)
     return (
         <>
             <Header />

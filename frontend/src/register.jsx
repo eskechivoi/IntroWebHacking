@@ -1,15 +1,17 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import userService from './services/user'
 import Header from './header.jsx'
 
 function Register (props) {
+  const navigate = useNavigate()
   const [user, setUser] = useState({ email: '', password: '' });
   const [alert, setAlert] = useState({ show: false, text: ''});
   
   const login = event => {
     event.preventDefault() // To not reload the page
     userService.register(user).then(response => {
-        window.location.href = '/login';
+        navigate('/login');
     }).catch(error => {
       console.log(error)
       if (error.response && error.response.status === 401)

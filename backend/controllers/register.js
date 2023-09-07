@@ -15,7 +15,17 @@ registerRouter.post('/', async (request, response) => {
 
   const user = new User({
     email: email,
-    password: passwordHash
+    password: passwordHash,
+    name: '',
+    surname: '',
+    phoneNumber: 0,
+    address: '',
+    postcode: 0,
+    education: '',
+    country: '',
+    region: '',
+    experience: '',
+    additionalDetails: ''
   })
 
   user.save().then(() => {

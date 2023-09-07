@@ -20,6 +20,8 @@ profileRouter.get('/', async (request, response) => {
         return response.status(500).json({ error: 'server error'})
     })
 
+    delete user.password // No enviamos el hash de la contraseña a través de la red
+
     response
     .status(200)
     .send(user)

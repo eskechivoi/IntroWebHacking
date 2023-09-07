@@ -9,7 +9,7 @@ function Profile (props) {
     useEffect(() => {
         userService.getProfileData(props.userToken).then(response => {
             if (response.status === 200){
-                const user = response.data.user
+                const user = response.data
                 setPagHtml(
                 <>
                     <Header />
@@ -60,6 +60,7 @@ function Profile (props) {
             if (error.response && error.response.status === 403)
                 setPagHtml(<ErrorPage code={401} name={'Unauthorised'} desc={'You must login before accessing your profile page.'}/>)
             else{
+                console.log(error)
                 setPagHtml(<ErrorPage code={500} name={'Server Error'} desc={'Can not communicate with server.'}/>)
             }
         })
