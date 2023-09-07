@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/login" element={<Login userToken={userToken}/>}/>
+        <Route path="/login" element={<Login userToken={userToken} setUserToken={setUser}/>}/>
         <Route path="/register" element={<Register />}/>
         <Route path="/profile" element={<Profile userToken={userToken}/>}/>
       </Routes>

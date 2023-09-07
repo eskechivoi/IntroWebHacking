@@ -11,8 +11,8 @@ function Login (props) {
     userService.login(user).then(response => {
       // recibimos el token de autorización si todo ha ido bien
       // lo guardamos en el objeto user
-      props.userToken = response.data.token
-      window.href.location = '/profile' // Al recargar la página, profile ya tiene el userToken.
+      props.setUserToken(response.data.token)
+      window.location.href = '/profile' // Al recargar la página, profile ya tiene el userToken.
     }).catch(error => {
       console.log(error)
       if (error.response && error.response.status === 401)
