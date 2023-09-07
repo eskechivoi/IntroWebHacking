@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 const changePwdRouter = require('express').Router()
 const User = require('../models/user')
 
-changePwdRouter.post('/:num', async (request, response) => {
+changePwdRouter.put('/:num', async (request, response) => {
   const num = request.params.num
 
   const user = await User.findOne({ num }).catch(() => {

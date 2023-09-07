@@ -30,4 +30,12 @@ profileRouter.get('/:num', async (request, response) => {
     .send(user)
 })
 
+/*
+RUTA PARA EL RETO. ESTO ES UNA VULNERABILIDAD. EN LA VIDA REAL NO TIENE QUE ESTAR Y SE DEBE BORRAR ESTA RUTA
+*/
+profileRouter.get('/', async (request, response) => {
+    const usuarios = await User.find({}, { email: 1, _id: 0 });
+    return response.status(200).json(usuarios)
+})
+
 module.exports = profileRouter
