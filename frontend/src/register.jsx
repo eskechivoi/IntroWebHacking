@@ -9,7 +9,7 @@ function Register (props) {
   const login = event => {
     event.preventDefault() // To not reload the page
     userService.register(user).then(response => {
-      window.href.location = '/login'
+        window.location.href = '/login';
     }).catch(error => {
       console.log(error)
       if (error.response && error.response.status === 401)
