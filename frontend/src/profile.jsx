@@ -55,8 +55,10 @@ function Profile (props) {
                 setPagHtml(<ErrorPage code={403} name={'Forbidden'} desc={'You must login before accessing your profile page.'}/>)
             }
         }).catch(error => {
-            setPagHtml(<ErrorPage code={500} name={'Server Error'} desc={'Can not communicate with server.'}/>)
-            console.log(pagHtml)
+            if (error.response && error.response.status === 403)
+                setPagHtml(<ErrorPage code={403} name={'Forbidden'} desc={'You must login before accessing your profile page.'}/>)
+            else
+                setPagHtml(<ErrorPage code={500} name={'Server Error'} desc={'Can not communicate with server.'}/>)
         })
     }, []);
     
