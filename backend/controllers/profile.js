@@ -4,7 +4,6 @@ const User = require('../models/user')
 
 const getTokenFrom = request => {
     const authorization = request.get('authorization')
-    console.log(authorization)
     if (authorization && authorization.startsWith('Bearer ')) {
       return authorization.replace('Bearer ', '')
     }
@@ -12,7 +11,6 @@ const getTokenFrom = request => {
 }
 
 profileRouter.get('/', async (request, response) => {
-    console.log(getTokenFrom(request))
     const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
     if (!decodedToken.id) {
         return response.status(401).json({ error: 'token invalid' })
