@@ -14,6 +14,7 @@ function Login (props) {
       // recibimos el token de autorización si todo ha ido bien
       // lo guardamos en el objeto user
       props.setUserToken(response.data.token)
+      props.setNum(response.data.num)
       navigate('/profile'); // Al recargar la página, profile ya tiene el userToken.
     }).catch(error => {
       console.log(error)

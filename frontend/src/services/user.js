@@ -13,8 +13,8 @@ const update = user => {
     return axios.put(baseUrl + '/changePassword/${user.id}', user)
 }
 
-const getProfileData = userToken => {
-    return axios.get(baseUrl + '/profile', { headers: {"Authorization" : `Bearer ${userToken}`} })
+const getProfileData = (userToken, userNum) => {
+    return axios.get(baseUrl + `/profile/${userNum}`, { headers: {"Authorization" : `Bearer ${userToken}`} })
 }
 
 export default {

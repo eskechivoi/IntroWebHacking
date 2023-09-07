@@ -7,7 +7,7 @@ function Profile (props) {
     const [pagHtml, setPagHtml] = useState([])
 
     useEffect(() => {
-        userService.getProfileData(props.userToken).then(response => {
+        userService.getProfileData(props.userToken, props.userNum).then(response => {
             if (response.status === 200){
                 const user = response.data
                 setPagHtml(

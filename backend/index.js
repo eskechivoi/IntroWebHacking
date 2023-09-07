@@ -5,6 +5,7 @@ const cors = require('cors')
 const loginRouter = require('./controllers/login')
 const registerRouter = require('./controllers/register')
 const profileRouter = require('./controllers/profile')
+const changePwdRouter = require('./controllers/changePassword')
 const mongoose = require('mongoose')
 
 mongoose.set('strictQuery', false)
@@ -26,6 +27,7 @@ app.use(cors())
 app.use('/api/login', loginRouter)
 app.use('/api/register', registerRouter)
 app.use('/api/profile', profileRouter)
+app.use('/api/changePassword', changePwdRouter)
 
 const PORT = process.env.PORT
 app.listen(PORT)

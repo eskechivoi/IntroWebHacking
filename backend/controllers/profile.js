@@ -10,7 +10,7 @@ const getTokenFrom = request => {
     return null
 }
 
-profileRouter.get('/', async (request, response) => {
+profileRouter.get('/:num', async (request, response) => {
     const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
     if (!decodedToken.id) {
         return response.status(401).json({ error: 'token invalid' })
@@ -20,6 +20,9 @@ profileRouter.get('/', async (request, response) => {
         return response.status(500).json({ error: 'server error'})
     })
 
+    if (user.num != request.params.num) // Esta comprobación es absurrda, es para el reto.
+        return response.status(401).json({ error: 'token invalid' })
+    
     delete user.password // No enviamos el hash de la contraseña a través de la red
 
     response

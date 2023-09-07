@@ -29,7 +29,7 @@ loginRouter.post('/', async (request, response) => {
 
   response
     .status(200)
-    .send({ token })
+    .send({ token: token, num: user.num })
 })
 
 module.exports = loginRouter
