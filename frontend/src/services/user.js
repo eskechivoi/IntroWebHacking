@@ -14,7 +14,7 @@ const update = user => {
 }
 
 const getProfileData = userToken => {
-    return axios.post(baseUrl + '/profile', userToken)
+    return axios.get(baseUrl + '/profile', { headers: {"Authorization" : `Bearer ${userToken}`} })
 }
 
 export default {

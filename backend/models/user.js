@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
   name: String,
-  surname: Boolean,
+  surname: String,
   phoneNumber: Number,
   address: String,
   postcode: Number,
@@ -18,7 +18,6 @@ const userSchema = new mongoose.Schema({
   country: String,
   region: String,
   experience: String,
-  desingExperience: String,
   additionalDetails: String
 })
 
