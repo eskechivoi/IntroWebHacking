@@ -4,13 +4,24 @@ import Header from './header'
 import ErrorPage from './error'
 
 function Profile (props) {
-    const [pagHtml, setPagHtml] = useState([])
+    const [ modfUser, setUser ] = useState(null)
+    const [ pagHtml, setPag ] = useState([])
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setUser((prevDatos) => ({
+          ...prevDatos,
+          [name]: value,
+        }));
+      };
 
     useEffect(() => {
         userService.getProfileData(props.userToken, props.userNum).then(response => {
             if (response.status === 200){
                 const user = response.data
-                setPagHtml(
+                if (modfUser === null) setUser(user)
+                else {
+                setPag(
                 <>
                     <Header />
                     <div className="container rounded bg-white mt-5">
@@ -24,19 +35,19 @@ function Profile (props) {
                                         <h4 className="text-right">Profile Settings</h4>
                                     </div>
                                     <div className="row mt-2">
-                                        <div className="col-md-6"><label className="labels">Name</label><input type="text" className="form-control" placeholder="first name" value="" />{user.name}</div>
-                                        <div className="col-md-6"><label className="labels">Surname</label><input type="text" className="form-control" value="" placeholder="surname" />{user.surname}</div>
+                                        <div className="col-md-6"><label className="labels">Name</label><input type="text" className="form-control" placeholder="first name" value={modfUser.name || ''} onChange={handleChange} name="name"/></div>
+                                        <div className="col-md-6"><label className="labels">Surname</label><input type="text" className="form-control" placeholder="surname" value={modfUser.surname || ''} onChange={handleChange} name="surname"/></div>
                                     </div>
                                     <div className="row mt-3">
-                                        <div className="col-md-12"><label className="labels">Mobile Number</label><input type="text" className="form-control" placeholder="enter phone number" value="" />{user.phoneNumber}</div>
-                                        <div className="col-md-12"><label className="labels">Address Line</label><input type="text" className="form-control" placeholder="enter address line" value="" />{user.address}</div>
-                                        <div className="col-md-12"><label className="labels">Postcode</label><input type="text" className="form-control" placeholder="enter postcode" value="" /></div>
-                                        <div className="col-md-12"><label className="labels">Email</label><input type="text" className="form-control" placeholder="enter email" value="" />{user.email}</div>
-                                        <div className="col-md-12"><label className="labels">Password</label><input type="text" className="form-control" placeholder="new password" value="" /></div>
+                                        <div className="col-md-12"><label className="labels">Mobile Number</label><input type="text" className="form-control" placeholder="enter phone number" value={modfUser.phoneNumber || ''} onChange={handleChange} name="phoneNumber"/></div>
+                                        <div className="col-md-12"><label className="labels">Address Line</label><input type="text" className="form-control" placeholder="enter address line" value={modfUser.address || ''} onChange={handleChange} name="address"/></div>
+                                        <div className="col-md-12"><label className="labels">Postcode</label><input type="text" className="form-control" placeholder="enter postcode" value={modfUser.postcode || ''} onChange={handleChange} name="postcode"/></div>
+                                        <div className="col-md-12"><label className="labels">Email</label><input type="email" className="form-control" placeholder="enter email" value={modfUser.email || ''} onChange={handleChange} name="email"/></div>
+                                        <div className="col-md-12"><label className="labels">Password</label><input type="password" className="form-control" placeholder="new password" value="" onChange={handleChange} name="password"/></div>
                                     </div>
                                     <div className="row mt-3">
-                                        <div className="col-md-6"><label className="labels">Country</label><input type="text" className="form-control" placeholder="country" value="" />{user.country}</div>
-                                        <div className="col-md-6"><label className="labels">State/Region</label><input type="text" className="form-control" value="" placeholder="state" />{user.region}</div>
+                                        <div className="col-md-6"><label className="labels">Country</label><input type="text" className="form-control" placeholder="country" value={modfUser.country || ''} onChange={handleChange} name="country"/></div>
+                                        <div className="col-md-6"><label className="labels">State/Region</label><input type="text" className="form-control" value={modfUser.region || ''} placeholder="state" onChange={handleChange} name="region"/></div>
                                     </div>
                                     <div className="mt-5 text-center"><button className="btn btn-primary profile-button" type="button">Save Profile</button></div>
                                 </div>
@@ -44,28 +55,28 @@ function Profile (props) {
                             <div className="col-md-4">
                                 <div className="p-3 py-5">
                                     <div className="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span className="border px-3 p-1 add-experience"><i className="fa fa-plus"></i>&nbsp;Experience</span></div>
-                                    <div className="col-md-12"><label className="labels">Education</label><input type="text" className="form-control" placeholder="education" value="" />{user.education}</div>
-                                    <div className="col-md-12"><label className="labels">Experience in Designing</label><input type="text" className="form-control" placeholder="experience" value="" />{user.experience}</div>
-                                    <div className="col-md-12"><label className="labels">Additional Details</label><input type="text" className="form-control" placeholder="additional details" value="" />{user.additionalDetails}</div>                               
+                                    <div className="col-md-12"><label className="labels">Education</label><input type="text" className="form-control" placeholder="education" value={modfUser.education || ''} onChange={handleChange} name="education"/></div>
+                                    <div className="col-md-12"><label className="labels">Experience in Designing</label><input type="text" className="form-control" placeholder="experience" value={modfUser.experience || ''} onChange={handleChange} name="experience"/></div>
+                                    <div className="col-md-12"><label className="labels">Additional Details</label><input type="text" className="form-control" placeholder="additional details" value={modfUser.additionalDetails || ''} onChange={handleChange} name="additionalDetails"/></div>                               
                                 </div>
                             </div>
                         </div>
                     </div>
                 </>
-                )
+                )}
             } else if (response.status === 401){
-                setPagHtml(<ErrorPage code={401} name={'Unauthorised'} desc={'You must login before accessing your profile page.'}/>)
+                setPag(<ErrorPage code={401} name={'Unauthorised'} desc={'You must login before accessing your profile page.'}/>)
             }
         }).catch(error => {
             if (error.response && error.response.status === 403)
-                setPagHtml(<ErrorPage code={401} name={'Unauthorised'} desc={'You must login before accessing your profile page.'}/>)
+                setPag(<ErrorPage code={401} name={'Unauthorised'} desc={'You must login before accessing your profile page.'}/>)
             else{
                 console.log(error)
-                setPagHtml(<ErrorPage code={500} name={'Server Error'} desc={'Can not communicate with server.'}/>)
+                setPag(<ErrorPage code={500} name={'Server Error'} desc={'Can not communicate with server.'}/>)
             }
         })
-    }, []);
-    
+    }, [modfUser]);
+    console.log(pagHtml)
     return pagHtml;
 }
 
