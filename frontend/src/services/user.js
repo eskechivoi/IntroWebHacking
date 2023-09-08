@@ -10,7 +10,7 @@ const register = user => {
 }
 
 const update = user => {
-    return axios.put(baseUrl + '/changePassword/${user.id}', user)
+    return axios.put(baseUrl + `/profile/${user.num}`, user)
 }
 
 const getProfileData = (userToken, userNum) => {
