@@ -19,6 +19,7 @@ function Profile (props) {
         userService.getProfileData(props.userToken, props.userNum).then(response => {
             if (response.status === 200){
                 const user = response.data
+                delete user.password
                 if (modfUser === null) setUser(user)
                 else {
                 setPag(
@@ -43,7 +44,7 @@ function Profile (props) {
                                         <div className="col-md-12"><label className="labels">Address Line</label><input type="text" className="form-control" placeholder="enter address line" value={modfUser.address || ''} onChange={handleChange} name="address"/></div>
                                         <div className="col-md-12"><label className="labels">Postcode</label><input type="text" className="form-control" placeholder="enter postcode" value={modfUser.postcode || ''} onChange={handleChange} name="postcode"/></div>
                                         <div className="col-md-12"><label className="labels">Email</label><input type="email" className="form-control" placeholder="enter email" value={modfUser.email || ''} onChange={handleChange} name="email"/></div>
-                                        <div className="col-md-12"><label className="labels">Password</label><input type="password" className="form-control" placeholder="new password" value="" onChange={handleChange} name="password"/></div>
+                                        <div className="col-md-12"><label className="labels">Password</label><input type="password" className="form-control" placeholder="new password" value={modfUser.password || ''} onChange={handleChange} name="password"/></div>
                                     </div>
                                     <div className="row mt-3">
                                         <div className="col-md-6"><label className="labels">Country</label><input type="text" className="form-control" placeholder="country" value={modfUser.country || ''} onChange={handleChange} name="country"/></div>
