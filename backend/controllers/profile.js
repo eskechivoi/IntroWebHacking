@@ -11,7 +11,10 @@ const getTokenFrom = request => {
 }
 
 profileRouter.get('/:num', async (request, response) => {
-    const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
+    const token = getTokenFrom(request)
+    if (!token) return response.status(401).json({ error: 'token invalid' })
+    
+    const decodedToken = jwt.verify(token, process.env.SECRET)
     if (!decodedToken.id) {
         return response.status(401).json({ error: 'token invalid' })
     }
