@@ -11,4 +11,4 @@ cd ../frontend
 npm install
 sudo npm install -g serve
 npm run build
-sudo serve -s dist -l 80 &
+sudo serve -s dist -l 80
