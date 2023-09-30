@@ -30,4 +30,4 @@ COPY --from=build-backend /app/ ./backend/
 EXPOSE 3001
 
 # Comando para iniciar las aplicaciones
-CMD ["sh", "-c" , "cd backend && npm start & serve -s ../frontend/dist -l tcp://0.0.0.0:443"]
+CMD ["sh", "-c" , "cd backend && npm start & cd ../ && serve -s frontend/dist -l tcp://0.0.0.0:443"]
