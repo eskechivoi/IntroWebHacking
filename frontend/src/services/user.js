@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:80/api'
+const baseUrl = '/api'
 
 const login = user => {    
     return axios.post(baseUrl + '/login', user)
