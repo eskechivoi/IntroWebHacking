@@ -16,9 +16,10 @@ RUN cd ./backend && npm install
 # Copiar el resto del código del frontend y del backend
 COPY ./frontend ./frontend
 COPY ./backend ./backend
+RUN cd ./frontend && npm run build
 
 # Exponer los puertos que tus aplicaciones utilizan
-EXPOSE 3000 5000
+EXPOSE 3001 80
 
 # Comando para iniciar las aplicaciones
 CMD ["sh", "-c", "cd ./frontend && npm start & cd ./backend && npm start"]
