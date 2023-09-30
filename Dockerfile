@@ -1,33 +1,24 @@
-# Fase de construcción del frontend
-FROM node:14 AS build-frontend
-WORKDIR /app
-COPY ./frontend/package*.json ./
-RUN npm install -g npm@8
-RUN npm install
-COPY ./frontend/ ./
-RUN npm run build
-
-# Fase de construcción del backend
-FROM node:14 AS build-backend
-WORKDIR /app
-COPY ./backend/package*.json ./
-RUN npm install -g npm@8
-RUN npm install
-COPY ./backend/ ./
-
-# Fase de producción
+# Usar una imagen de Node.js como base
 FROM node:14
+
+# Establecer el directorio de trabajo en el contenedor
 WORKDIR /app
-
-# Configuración del frontend
-COPY --from=build-frontend /app/dist/ ./frontend/dist/
 RUN npm install -g npm@8
-RUN npm install -g serve
-EXPOSE 443
 
-# Configuración del backend
-COPY --from=build-backend /app/ ./backend/
-EXPOSE 3001
+# Copiar los archivos package.json y package-lock.json
+COPY ./frontend/package*.json ./frontend/
+COPY ./backend/package*.json ./backend/
+
+# Instalar las dependencias del frontend y del backend
+RUN cd ./frontend && npm install
+RUN cd ./backend && npm install
+
+# Copiar el resto del código del frontend y del backend
+COPY ./frontend ./frontend
+COPY ./backend ./backend
+
+# Exponer los puertos que tus aplicaciones utilizan
+EXPOSE 3000 5000
 
 # Comando para iniciar las aplicaciones
-CMD ["sh", "-c" , "cd backend && npm start & cd ../ && serve -s frontend/dist -l tcp://0.0.0.0:443"]
+CMD ["sh", "-c", "cd ./frontend && npm start & cd ./backend && npm start"]
