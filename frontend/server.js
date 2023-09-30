@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import cors from 'cors';
 
 const app = express();
 
@@ -11,6 +12,7 @@ const __dirname = dirname(__filename);
 
 // Sirve los archivos estáticos de la carpeta dist
 app.use(express.static(path.join(__dirname, 'dist')));
+app.use(cors());
 
 // Redirige todas las rutas al index.html
 app.get('/*', function(req, res) {
