@@ -31,7 +31,7 @@ app.use('/api/profile', profileRouter)
 // Sirve los archivos estáticos de la carpeta dist
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-function redirectFront (req, res) {ç
+function redirectFront (req, res) {
 	res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'), function(err) {
 		if (err) {
 		  res.status(500).send(err)
