@@ -46,11 +46,12 @@ profileRouter.put('/:num', async (request, response) => {
     })
   
     const reqUser = request.body
-    if (reqUser.password.length < 8)
+    if (reqUser.password && reqUser.password.length < 8)
       return response.status(400).json({error: 'Password must be at least 8 characters long.'})
-    const passwordHash = bcrypt.hashSync(reqUser.password, 10)
-  
-    reqUser.password = passwordHash
+    else if (reqUser.password) {
+      const passwordHash = bcrypt.hashSync(reqUser.password, 10)
+      reqUser.password = passwordHash
+    }
 
     await User.updateOne(
       { num: num }, // Consulta para filtrar los documentos a modificar
