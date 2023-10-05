@@ -22,3 +22,12 @@ Then, run this container with
 ```bash
 docker run -p 80:80 webhackintro
 ```
+## Use Atlas DB as DataBase
+Go to [https://www.mongodb.com/atlas/database] and Sign in.
+1) Then, create your first database.
+2) Click connect.
+3) Click ''MongoDB for VS Code''
+4) Copy the connection string in your `.env` file, in `MONGODB_URI`
+5) Copy your account password in `SECRET`
+6) Go to Network Access, and permit all IPs
+- Add the next IP address: `0.0.0.0/0`. This will allow all incoming IPs.
